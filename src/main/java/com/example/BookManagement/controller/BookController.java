@@ -1,15 +1,11 @@
 package com.example.BookManagement.controller;
-
 import com.example.BookManagement.contract.BookRequest;
 import com.example.BookManagement.contract.BookResponse;
-import com.example.BookManagement.model.Book;
+import com.example.BookManagement.contract.ReviewRequest;
+import com.example.BookManagement.contract.ReviewResponse;
+import com.example.BookManagement.repository.ReviewRepository;
 import com.example.BookManagement.service.BookService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -18,22 +14,23 @@ import java.util.List;
 //@AllArgsConstructor
 public class BookController {
 private final BookService bookService;
+private final ReviewRepository reviewRepository;
 
-    public BookController(BookService bookService) {
+    public BookController(BookService bookService, ReviewRepository reviewRepository) {
         this.bookService = bookService;
+        this.reviewRepository = reviewRepository;
     }
     @PostMapping("/create")
-    public ResponseEntity<BookResponse> createBookData(@RequestBody BookRequest bookRequest){
-        return new ResponseEntity<>(bookService.createBook(bookRequest), HttpStatus.OK);
+    public BookResponse createBookData(@RequestBody BookRequest bookRequest){
+        return bookService.createBook(bookRequest);
     }
 @GetMapping
-public ResponseEntity<List<Book>> getAllBooks() {
-    List<Book> books = bookService.getAllBooks();
-    return ResponseEntity.ok(books);
+public List<BookResponse> getAllBooks() {
+  return bookService.getAllBooks();
 }
-    @GetMapping("get/{id}")
-    public ResponseEntity<BookResponse> getBooksById(@PathVariable Long id){
-       return ResponseEntity.ok(bookService.getBookById(id));
+    @GetMapping("/{id}")
+    public BookResponse getBookById(@PathVariable Long id){
+       return bookService.getBookById(id);
     }
     @PutMapping("update/{id}")
     public BookResponse updateBookById(@PathVariable Long id,@RequestBody BookRequest request ){
@@ -42,5 +39,14 @@ public ResponseEntity<List<Book>> getAllBooks() {
     @DeleteMapping("delete/{id}")
     public String deleteBookById(@PathVariable Long id) {
         return bookService.deleteBookById(id);
+}
+@PostMapping("/{id}/reviews")
+public List<ReviewResponse> addReview(@PathVariable Long id, @RequestBody ReviewRequest reviewRequest){
+        return bookService.addReview(id,reviewRequest);
+
+}
+@GetMapping("/{id}/reviews")
+public List<ReviewResponse>viewAllReviews(@PathVariable Long id){
+return bookService.viewAllReviews(id);
 }
 }

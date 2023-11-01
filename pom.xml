@@ -63,7 +63,12 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-        <dependency>
+		<dependency>
+			<groupId>com.example</groupId>
+			<artifactId>BookManagement</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.9.3</version>

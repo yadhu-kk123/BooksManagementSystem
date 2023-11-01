@@ -1,5 +1,7 @@
 package com.example.BookManagement.contract;
 
+import com.example.BookManagement.model.Review;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,10 +11,12 @@ public class BookRequest {
     private String title;
     private String author;
     private String genre;
-    private int price;
+    private double price;
     private int stockQuantity;
+    @OneToMany
+    public Review review;
 
-    public BookRequest(String title, String author, String genre, int price, int stockQuantity) {
+    public BookRequest(String title, String author, String genre, double price, int stockQuantity) {
         this.title = title;
         this.author = author;
         this.genre = genre;
@@ -44,11 +48,11 @@ public class BookRequest {
         this.genre = genre;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

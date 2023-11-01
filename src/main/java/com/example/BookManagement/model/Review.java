@@ -8,21 +8,22 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-@Entity
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Entity
 public class Review {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
     private long userId;
     private double rating;
     private String comment;
     private Date createdAt;
+    @ManyToOne private Book book;
 
-    @ManyToOne
-    private Book book;
+
 
 }

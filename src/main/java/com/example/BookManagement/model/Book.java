@@ -2,29 +2,31 @@ package com.example.BookManagement.model;
 import jakarta.persistence.*;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
 import java.util.List;
     @Entity
 //    @Builder
 //    @Getter
 //    @Setter
-//    @NoArgsConstructor
-//    @AllArgsConstructor
+    @NoArgsConstructor
+   @AllArgsConstructor
     public class Book
     {
         @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @GeneratedValue(strategy = GenerationType.AUTO)
         private Long id;
 
         private String title;
         private String author;
         private String genre;
-        private int price;
+        private Double price;
         private int stockQuantity;
 
-        @OneToMany(cascade = CascadeType.ALL)
+        @OneToMany(mappedBy = "book",cascade = CascadeType.ALL)
         private List<Review> review;
 
-        public Book( String title, String author, String genre, int price, int stockQuantity) {
+        public Book( String title, String author, String genre, double price, int stockQuantity) {
 
             this.title = title;
             this.author = author;
@@ -32,6 +34,9 @@ import java.util.List;
             this.price = price;
             this.stockQuantity = stockQuantity;
 
+        }
+
+        public <E> Book(long id, String title,String author, String genre, double price, int stockQuantity, ArrayList<E> es) {
         }
 
         public Long getId() {
@@ -66,11 +71,11 @@ import java.util.List;
             this.genre = genre;
         }
 
-        public int getPrice() {
+        public double getPrice() {
             return price;
         }
 
-        public void setPrice(int price) {
+        public void setPrice(double price) {
             this.price = price;
         }
 
